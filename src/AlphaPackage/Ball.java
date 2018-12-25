@@ -3,15 +3,14 @@ package AlphaPackage;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import sun.net.www.content.image.jpeg;
 
 /**
  *
  * @author larik
  */
 public class Ball {
-    private static int diameter = 10;
-    private static Color ballColor = Color.BLUE;
+    final static int diameter = 10;
+    private static Color ballColor = new Color(90, 167, 243);
     int x = 0;
     int y = 0;
     int dx = 1;
@@ -48,12 +47,13 @@ public class Ball {
         }
         //if ball
         if(y + dy > Game.getWindowHeight() - diameter){
-            dx = 0;
-            dy = 0;
+//            dx = 0;
+//            dy = 0;
+            dy = -1;
         }
         if(collision()){
             System.out.println("Collided");
-            dy *= -1;
+            dy *= -1;            
         }
         x += dx;
         y += dy;

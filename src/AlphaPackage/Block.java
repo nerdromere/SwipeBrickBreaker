@@ -6,6 +6,7 @@
 package AlphaPackage;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -14,6 +15,8 @@ import java.awt.Rectangle;
  * @author larik
  */
 public class Block {
+    final int fontSize = 13;
+    final Font font = new Font("TimesRoman", Font.BOLD, fontSize);
     int num = 0;
     int max = 0;
     private Color background;
@@ -40,8 +43,7 @@ public class Block {
                 row * Game.getWindowHeight() / Game.getRows(), 
                 Game.getWindowWidth() / Game.getCols(), Game.getWindowHeight() / Game.getRows());
             g.setColor(Color.BLACK);
-            g.drawString(num + "", column * Game.getWindowWidth() / Game.getCols(),
-                    row * Game.getWindowHeight() / Game.getRows() + Game.getWindowHeight() / Game.getRows());
+            paintNumber(g);
         }
     }
     
@@ -56,5 +58,14 @@ public class Block {
         return new Rectangle(column * Game.getWindowWidth() / Game.getCols(), 
                 row * Game.getWindowHeight() / Game.getRows(), 
                 Game.getWindowWidth() / Game.getCols(), Game.getWindowHeight() / Game.getRows());
+    }
+    
+    private void paintNumber(Graphics2D g){
+        g.setFont(font);
+        g.setColor(Color.WHITE);
+        if(num < 10){
+            g.drawString(num + "", column * Game.getWindowWidth() / Game.getCols() + Game.getWindowWidth() / Game.getCols() / 2,
+                    row * Game.getWindowHeight() / Game.getRows() + Game.getWindowHeight() / Game.getRows() / 2);
+        }
     }
 }
