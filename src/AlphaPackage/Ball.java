@@ -10,7 +10,7 @@ import java.awt.Rectangle;
  */
 public class Ball {
     final static int diameter = 10;
-    private static Color ballColor = new Color(90, 167, 243);
+    private static Color ballColor = new Color(91, 167, 244);
     int x = 0;
     int y = 0;
     int dx = 1;
@@ -51,20 +51,38 @@ public class Ball {
 //            dy = 0;
             dy = -1;
         }
-        if(collision()){
-            System.out.println("Collided");
+        if(collisionOnSides()){
+            dx *= -1;            
+        }
+        
+        if(collisionOnPoles()){
             dy *= -1;            
         }
         x += dx;
         y += dy;
-        System.out.println(x + " " + y + " " + dx + " " + dy);
     }
     
-    private boolean collision(){
+    private boolean collisionOnSides(){
         for (int i = 0; i < Game.getRows(); i++) {
             for (int j = 0; j < Game.getCols(); j++) {
-                if(game.grid[i][j].getBounds().intersects(getBounds()) && game.grid[i][j].num > 0)
+                if(Utilities.hitsSides(game.grid[i][j].getBounds(), getBounds()) && game.grid[i][j].num > 0){
+                    game.grid[i][j].num--;
+                    game.grid[i][j].background = Block.changeColorTo(game.grid[i][j].num, game.grid[i][j].max);
                     return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    private boolean collisionOnPoles(){
+        for (int i = 0; i < Game.getRows(); i++) {
+            for (int j = 0; j < Game.getCols(); j++) {
+                if(Utilities.hitsPoles(game.grid[i][j].getBounds(), getBounds()) && game.grid[i][j].num > 0){
+                    game.grid[i][j].num--;
+                    game.grid[i][j].background = Block.changeColorTo(game.grid[i][j].num, game.grid[i][j].max);
+                    return true;
+                }
             }
         }
         return false;

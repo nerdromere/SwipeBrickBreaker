@@ -44,7 +44,7 @@ public class Game extends JPanel {
         while(true){
             game.move();
             game.repaint();
-            Thread.sleep(3);
+            Thread.sleep(10);
         }
     }
     
@@ -62,10 +62,10 @@ public class Game extends JPanel {
         }
         g.setColor(Color.WHITE);
         for(int i = 0; i < ROWS; i++){
-            g.drawLine(0, i * Game.getWindowHeight() / Game.getRows() - 1, 
-                    WIDTH, i * Game.getWindowHeight() / Game.getRows() - 1);
-            g.drawLine(0, i * Game.getWindowHeight() / Game.getRows() - 2, 
-                    WIDTH, i * Game.getWindowHeight() / Game.getRows() - 2);
+            g.drawLine(0, i * HEIGHT / ROWS - 1, 
+                    WIDTH, i * HEIGHT / ROWS - 1);
+            g.drawLine(0, i * HEIGHT / ROWS - 2, 
+                    WIDTH, i * HEIGHT / ROWS - 2);
         }
         for (int i = 0; i <= COLS; i++) {
             g.drawLine(i * Game.getWindowWidth() / Game.getCols(), 0,
@@ -102,7 +102,6 @@ public class Game extends JPanel {
             //update row level
             for (int j = 0; j < COLS; j++) {
                 grid[i - 1][j].row++;
-                //System.out.println(grid[i - 1][j]);
             }
             grid[i] = grid[i - 1].clone();
         }
@@ -141,7 +140,7 @@ public class Game extends JPanel {
         return spawn;
     }
     
-    private void move(){
+    private void move() throws InterruptedException{
         for(Ball b : balls) {
             b.move();
         }
@@ -159,6 +158,7 @@ public class Game extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 startX = e.getX();
                 startY = e.getY();
+                nextLevel();
             }
 
             @Override
@@ -186,7 +186,7 @@ public class Game extends JPanel {
         this.setSize(WIDTH, HEIGHT);
     }
     
-        public static int getWindowWidth(){
+    public static int getWindowWidth(){
         return WIDTH;
     }
     
