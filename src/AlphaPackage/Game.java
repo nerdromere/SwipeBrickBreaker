@@ -110,7 +110,7 @@ public class Game extends JPanel {
                      JOptionPane.WARNING_MESSAGE);
              initGame();
         } else {
-            level++;
+            level += 3;
             balls.add(new Ball(this, WIDTH / 2, HEIGHT - Ball.diameter));
             boolean[] top = getRandom(0);
             for (int i = 0; i < COLS; i++) {

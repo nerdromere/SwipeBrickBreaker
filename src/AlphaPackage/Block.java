@@ -93,7 +93,7 @@ public class Block {
     }
 
     public static Color changeColorTo(int num, int max) {
-        double percentage = (double) num / max;
+        double percentage = 1 - (double) num / max;
         int dr = (int) ((lastColor.getRed() - firstColor.getRed()) * percentage);
         int dg = (int) ((lastColor.getGreen() - firstColor.getGreen()) * percentage);
         int db = (int) ((lastColor.getBlue() - firstColor.getBlue()) * percentage);
