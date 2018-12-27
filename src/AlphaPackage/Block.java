@@ -18,6 +18,7 @@ public class Block {
 
     final static Color firstColor = new Color(255, 65, 82);
     final static Color lastColor = new Color(243, 158, 115);
+    final static Color shadow = new Color(222, 196, 198);
     int fontSize = 13;
     Font font = new Font("TimesRoman", Font.BOLD, fontSize);
     int num = 0;
@@ -55,11 +56,26 @@ public class Block {
     public void paint(Graphics2D g) {
         if (num > 0) {
             g.setColor(background);
-            g.fillRect(column * Game.getWindowWidth() / Game.getCols(),
-                    row * Game.getWindowHeight() / Game.getRows(),
-                    Game.getWindowWidth() / Game.getCols(), Game.getWindowHeight() / Game.getRows());
+            g.fillRect(column * Game.getWindowWidth() / Game.getCols() + 2,
+                    row * Game.getWindowHeight() / Game.getRows() + 1,
+                    Game.getWindowWidth() / Game.getCols() - 1, Game.getWindowHeight() / Game.getRows() - 1);
             g.setColor(Color.BLACK);
             paintNumber(g);
+
+        }
+    }
+
+    public void paintShadow(Graphics2D g) {
+        if (num > 0) {
+        g.setColor(shadow);
+        //bottom shadow
+        g.fillRect(column * Game.getWindowWidth() / Game.getCols() + 4,
+                (row + 1) * Game.getWindowHeight() / Game.getRows() - 1,
+                Game.getWindowWidth() / Game.getCols() - 1, 3);
+        //side shadow
+        g.fillRect((column + 1) * Game.getWindowWidth() / Game.getCols(),
+                row * Game.getWindowHeight() / Game.getRows() + 5,
+                3, Game.getWindowHeight() / Game.getRows() - 3);
         }
     }
 
@@ -78,7 +94,7 @@ public class Block {
     private void paintNumber(Graphics2D g) {
         g.setFont(font);
         g.setColor(Color.WHITE);
-        if (num > 10) {
+        if (num >= 10) {
             fontSize = 9;
             g.drawString(num + "", column * Game.getWindowWidth() / Game.getCols() + Game.getWindowWidth() / Game.getCols() / 2 - fontSize / 2,
                     row * Game.getWindowHeight() / Game.getRows() + Game.getWindowHeight() / Game.getRows() / 2 + fontSize / 2);
@@ -97,7 +113,6 @@ public class Block {
         int dr = (int) ((lastColor.getRed() - firstColor.getRed()) * percentage);
         int dg = (int) ((lastColor.getGreen() - firstColor.getGreen()) * percentage);
         int db = (int) ((lastColor.getBlue() - firstColor.getBlue()) * percentage);
-        System.out.println(num + " " + max + " " + (firstColor.getRed() + dr) + " " + (firstColor.getGreen() + dg) + " " + (firstColor.getBlue() + db));
         return new Color(firstColor.getRed() + dr, firstColor.getGreen() + dg, firstColor.getBlue() + db);
     }
 }
