@@ -30,11 +30,12 @@ public class Driver {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.initGame();
+        game.createSet();
         game.nextLevel();
         while(true){
             game.move();
             game.repaint();
-            Thread.sleep(5);
+            Thread.sleep(2);
         }
     }
 }

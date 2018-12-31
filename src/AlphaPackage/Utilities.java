@@ -5,6 +5,7 @@
  */
 package AlphaPackage;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import javafx.scene.shape.Circle;
 
@@ -102,28 +103,28 @@ public class Utilities {
         return false;
     }
     
+    public static double degree(Game game, Ball circle, int dx, int dy){
+        int centerX = circle.x + Ball.diameter/ 2;
+        int centerY = circle.y + Ball.diameter / 2;
+        double radiusSquared = Math.pow(Ball.diameter / 2, 2);
+        //bottom
+        for (int k = -Ball.diameter / 2; k <= Ball.diameter / 2; k++) {
+            if(game.corners.contains(new Point(centerX + k, (int)(centerY + Math.sqrt(radiusSquared - k * k))))
+            || game.corners.contains(new Point(centerX + k, (int) Math.ceil(centerY + Math.sqrt(radiusSquared - k * k))))){
+                //System.out.println((centerX + k) + " " + (int)(centerY + Math.sqrt(radiusSquared - k * k)));
+                return 360 - 180 / Math.PI * Math.acos(k / (Ball.diameter / 2.0));
+            }
+        }
+        //top
+        for (int k = -Ball.diameter / 2; k <= Ball.diameter / 2; k++) {
+            if(game.corners.contains(new Point(centerX + k, (int)(centerY - Math.sqrt(radiusSquared - k * k))))
+            || game.corners.contains(new Point(centerX + k, (int) Math.ceil(centerY - Math.sqrt(radiusSquared - k * k))))){
+               // System.out.println((centerX + k) + " " + (int)(centerY - Math.sqrt(radiusSquared - k * k)));
+                return 180 / Math.PI * Math.acos(k / (Ball.diameter / 2.0));
+            }
+        }
+        
+        return -1;
+    }
     
-    
-    /**
-     * Credit to e.James on StackOverflow
-     * @param circle
-     * @param rect
-     * @return 
-     */
-    public static boolean intersects(Circle circle, Rectangle rect)
-{
-    int circleDistanceX = (int)Math.abs(circle.getCenterX() - (rect.x-rect.getWidth()/2)); 
-    int circleDistanceY = (int)Math.abs(circle.getCenterY() - (rect.y-rect.getWidth()/2));
-    
-    if (circleDistanceX > (int)(rect.width/2 + circle.getRadius())) { return false; }
-    if (circleDistanceY > (int)(rect.height/2 + circle.getRadius())) { return false; }
-
-    if (circleDistanceX <= (rect.width/2)) { return true; }
-    if (circleDistanceY <= (rect.height/2)) { return true; }
-
-    double cornerDistance_sq = Math.pow(circleDistanceX - rect.width/2, 2) +
-                         Math.pow(circleDistanceY - rect.height/2, 2);
-
-    return (cornerDistance_sq <= (circle.getRadius() * circle.getRadius()));
-}
 }
