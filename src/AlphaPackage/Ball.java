@@ -62,14 +62,16 @@ public class Ball {
     int dy = 0;
     //the current game state
     private Game game;
-    
+    //statistics
+    private Statistics stats;
     /**
      * Constructor used whenever a new ball is acquired
      * @param game state of the game for the ball to maneuver through
      */
-    public Ball(Game game, int pos){
+    public Ball(Game game, int pos, Statistics stats){
         this.game = game;
         this.position = pos;
+        this.stats = stats;
         initialX = restPositionX;
         initialY = restPositionY;
         x = restPositionX;
@@ -90,7 +92,9 @@ public class Ball {
      * the walls, block edges, or block corners.
      */
     public void move(){
-        levelFrameCounter++;
+        stats.updateText(game.balls);
+        if(turnStarted)
+            levelFrameCounter++;
         //if ball goes too far left
         if(x + dx < 0){
             dx = Math.abs(dx);
@@ -109,7 +113,7 @@ public class Ball {
         }
         //if ball goes to the bottom
         if(y + dy > Game.getWindowHeight() - diameter && leftRestPosition){
-            System.out.println("yeah im too low...");
+            //System.out.println("yeah im too low...");
             changeDirection();
             dx = 0;
             dy = 0;
@@ -143,18 +147,10 @@ public class Ball {
         if(turnStarted && leftRestPosition){ 
             magX = Math.abs(1.0 / Math.sqrt(1 + slope * slope));
             magY = Math.abs(slope / Math.sqrt(1 + slope * slope));
-            System.out.println(slope + " " + magX + " " + magY + " " + dx + " " + dy + " " + x + " " + y);
+            //System.out.println(slope + " " + magX + " " + magY + " " + dx + " " + dy + " " + x + " " + y);
             x = (int)(initialX + magX * dx * iteration);
             y = (int)(initialY + magY * dy * iteration++);
         }
-//        if(initialY != 0 && slope < 1){
-//            y = initialY + (int) (slope * iteration++ * dx);
-//            x += dx;
-//        }
-//        else if(initialY != 0 && slope >= 1){
-//            x = initialX + (int) (1.0 / slope * iteration++ * dy);
-//            y += dy;
-//        }
     }
     
 //    private boolean collisionOnSides(){
@@ -183,7 +179,7 @@ public class Ball {
      */
     private void hitCorner(double degree){
         double travelAngle = 180 / Math.PI * Math.atan(slope);
-        //System.out.println(travelAngle);
+        System.out.println(travelAngle);
     }
     
     /**

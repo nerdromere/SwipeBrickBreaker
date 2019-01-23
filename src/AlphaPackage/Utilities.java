@@ -123,7 +123,6 @@ public class Utilities {
                 return 180 / Math.PI * Math.acos(k / (Ball.diameter / 2.0));
             }
         }
-        
         return -1;
     }
     

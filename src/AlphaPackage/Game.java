@@ -1,11 +1,9 @@
 package AlphaPackage;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -13,8 +11,6 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -51,7 +47,8 @@ public class Game extends JPanel {
     public Block[][] grid = new Block[ROWS][COLS];
     ArrayList<Ball> balls = new ArrayList<>(5);
     Set<Point> corners = new HashSet<Point>();
-
+    Statistics stats = new Statistics();
+    
    public Game() {
         addMouseListener(new MouseListener() {
             @Override
@@ -206,7 +203,7 @@ public class Game extends JPanel {
             level++;
             Ball.onLineWaiting = 0;
             Ball.restPositionSet = false;
-            balls.add(new Ball(this, level));
+            balls.add(new Ball(this, level, stats));
             boolean[] top = getRandom(0);
             for (int i = 0; i < COLS; i++) {
                 grid[1][i] = new Block(1, i, 0, level, new Color(255, 64, 81));
@@ -223,6 +220,8 @@ public class Game extends JPanel {
      */
     private Point getEndPoint(double slope, int x, int y){
         Point p = new Point();
+        int iteration = 0;
+        
         return p;
     }
     /**
@@ -263,6 +262,7 @@ public class Game extends JPanel {
         Ball.levelFrameCounter = 0;
         for(Ball b : balls){
              b.slope = slope;
+             b.iteration = 0;
              b.initialY = HEIGHT - Ball.diameter;
              b.initialX = Ball.restPositionX;
              b.dy = -1;

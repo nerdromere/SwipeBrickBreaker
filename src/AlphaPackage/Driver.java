@@ -32,10 +32,18 @@ public class Driver {
         game.initGame();
         game.createSet();
         game.nextLevel();
+        Statistics stats = new Statistics();
+        stats.setIconImage(new ImageIcon("src/Pictures/logo.jpg").getImage());
+        stats.setLocationRelativeTo(null);
+        stats.setResizable(false);
+        stats.setVisible(true);
+        game.stats = stats;
         while(true){
             game.move();
             game.repaint();
             Thread.sleep(2);
+//            if(Ball.turnEnded)
+//                game.nextLevel();
         }
     }
 }
